@@ -1,3 +1,8 @@
+'''
+This is the implementation of CART decision tree and random forest by CART. 
+All rights reserved by edinhon. 
+'''
+
 import numpy as np
 
 class CART: 
@@ -111,29 +116,3 @@ def accuracy(pred, truth):
     truth = np.array(truth)
     return (pred == truth).sum()/len(pred)
 
-def main(): 
-    train_data = np.loadtxt('./hw6_train.dat')
-    test_data = np.loadtxt('./hw6_test.dat')
-    n, k = train_data.shape[0], train_data.shape[1]-1
-    
-    trainX, trainY = train_data[:, :-1], train_data[:, -1]
-    testX, testY = test_data[:, :-1], test_data[:, -1]
-    
-    # P14
-    clf = CART()
-    clf.fit(trainX, trainY)
-    pred = clf.predict(testX)
-    print(f'P14: Out Accuracy = {accuracy(pred, testY)}')
-
-    # P15 P16 P17 P18
-    clf = RandomForest(n_estimators=2000, max_samples=0.5)
-    clf.fit(trainX, trainY)
-    print(f'P15: Mean Score = {clf.mean_score(testX, testY)}')
-    pred_in = clf.predict(trainX)
-    print(f'P16: In Accuracy = {accuracy(pred_in, trainY)}')
-    pred_out = clf.predict(testX)
-    print(f'P17: Out Accuracy = {accuracy(pred_out, testY)}')
-    print(f'P18: OOB Score = {clf.oob_score(trainX, trainY)}')
-
-if __name__ == '__main__': 
-    main()
